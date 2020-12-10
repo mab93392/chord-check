@@ -13,8 +13,3 @@ def synth_detect(data,smpl_rate):
     f = v/tau
     return   [f,freq_data]
 
-# chord = Chord()
-# data = chord.final_out()[0]
-# a = synth_detect(data,44100)
-# print(a)
-# print(len(a[0]))
