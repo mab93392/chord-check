@@ -1,9 +1,9 @@
 import mysql.connector 
 import numpy as np 
-from key_act_setup import key_act_setup
-from chord_db_drop import tab_drop
+
 
 def type_act(row):
+    # connects to database
     chord_db = mysql.connector.connect(
         host = "localhost",
         user = "root",
@@ -11,9 +11,9 @@ def type_act(row):
         database = "chord_data"
     )
 
-    cur = chord_db.cursor()
+    cur = chord_db.cursor() # establishes cursor
 
-    cur.execute("SELECT * FROM k_act WHERE act_num = %s" % row)
+    cur.execute("SELECT * FROM k_act WHERE act_num = %s" % row) # retrieves data
     v = cur.fetchall()
     
     return v

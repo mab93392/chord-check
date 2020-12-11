@@ -6,6 +6,7 @@ from key_weight_setup import key_weight_setup
 
 
 def key_weight():
+    # connects to database
     chord_db = mysql.connector.connect(
         host = "localhost",
         user = "root",
@@ -13,9 +14,9 @@ def key_weight():
         database = "chord_data"
     )
 
-    cur = chord_db.cursor()
+    cur = chord_db.cursor() # establishes cursor
 
-    cur.execute("SELECT * FROM key_weight")
+    cur.execute("SELECT * FROM key_weight") # retrieves desired values
     v = np.array(cur.fetchall())[:,1:]
 
     

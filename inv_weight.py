@@ -4,6 +4,7 @@ from inv_weight_setup import inv_weight_setup
 
 
 def inv_weight():
+    # connects to database
     chord_db = mysql.connector.connect(
         host = "localhost",
         user = "root",
@@ -13,6 +14,7 @@ def inv_weight():
 
     cur = chord_db.cursor()
 
+    # retrieves values
     cur.execute("SELECT * FROM inv_weight")
     v = np.array(cur.fetchall())[:,1:]
     

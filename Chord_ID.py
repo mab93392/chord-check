@@ -8,7 +8,7 @@ from key_act import key_act
 from inv_act import inv_act
 from inv_weight import inv_weight
 from table_control import table_control
-from test_case import test_case
+
 
 
 class Chord_ID:
@@ -16,11 +16,6 @@ class Chord_ID:
     def __init__(self):
         chord = Chord()                # this class generates a simulated chord w/
         data = chord.final_out()       # randomly selected type, key, and inversion
-        # data = test_case()           # used for a known chord data set
-        # self.key = data[0]
-        # self.type = data[1]
-        # self.inv = data[2]
-        # self.input = np.reshape(data[3],(len(data[3]),1))
         self.key = data[2]
         self.type = data[3]
         self.inv = data[4]
@@ -111,7 +106,6 @@ class Chord_ID:
         
 
             
-
 
       
         
