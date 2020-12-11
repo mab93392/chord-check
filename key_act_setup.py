@@ -32,7 +32,7 @@ def key_act_setup():
         cur.execute(s,(i+1,i+1))
         chord_db.commit()
     
-# key_act_setup()
+
 
 
     
