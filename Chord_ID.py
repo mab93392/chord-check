@@ -8,7 +8,7 @@ from key_act import key_act
 from inv_act import inv_act
 from inv_weight import inv_weight
 from table_control import table_control
-
+from table_update import table_update
 
 
 class Chord_ID:
@@ -79,7 +79,8 @@ class Chord_ID:
             self.w1 = self.w1-adj1
             self.w3 = self.w3-adj3
         y13 = np.append(y1,y3,0) # used as "detection" the type layer
-        
+        table_update(self.w1,"key_weight") # writes adjusted weights to SQL table
+        table_update(self.w3,"inv_weight")
 
 
         # type layer
@@ -103,12 +104,15 @@ class Chord_ID:
                     adj = np.vstack((adj,adji))
             
             self.w2 = self.w2-adj
-        
+        table_update(self.w2,"type_weight") # writes adjusted weights to SQL table
 
-            
+    
+    def train(self): # used continual training
+        for i in range(0,25):
+            self.learn()    
 
       
-        
+
 
             
         
