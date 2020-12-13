@@ -139,9 +139,9 @@ class Chord_ID:
                 type_,
                 inv]
         
-        return np.append(out1,out2,2)
+        return np.append(out1,out2,1)
         
-        
+
         
 
 
