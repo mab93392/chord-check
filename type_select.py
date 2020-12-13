@@ -1,4 +1,4 @@
-# selects type of of chord
+# selects type of of chord 
 
 def type_select(acts):
     apx = max(acts) # extracts max value from activations
