@@ -9,7 +9,8 @@ from inv_act import inv_act
 from inv_weight import inv_weight
 from table_control import table_control
 from table_update import table_update
-
+from key_inv_select import key_inv_select
+from type_select import type_select
 
 class Chord_ID:
     
@@ -111,12 +112,34 @@ class Chord_ID:
         for i in range(0,25):
             self.learn()    
 
-      
+    def think(self): # uses calculated weights to determine chords
 
+        # key evaluation
+        key_x = np.dot(key_weight(),self.input) # uses weights & input layer to make input to sigmoid function
+        key_a = self.sig(key_x) # activation for key
 
-            
+        # inversion activation 
+        inv_x = np.dot(inv_weight(),self.input) # uses weights & input layer to make input to sigmoid function
+        inv_a = self.sig(inv_x) # activation for inversion
+
+        # type evaluation 
+        type_inp = np.append(key_a,inv_a,0) # forms input for 2nd layer
+        type_x = np.dot(type_weight(),type_inp) # uses weights & input layer to make input to sigmoid function
+        type_a = self.sig(type_x) # activation for type
         
+        # naming portion 
+        key = key_inv_select(key_a)
+        inv = key_inv_select(inv_a)
+        type_ = type_select(type_a)
+
+        out1 = ["key",
+                "type",
+                "inv"]
+        out2 = [key,
+                type_,
+                inv]
         
+        return np.append(out1,out2,2)
         
         
         
