@@ -11,6 +11,8 @@ from table_control import table_control
 from table_update import table_update
 from key_inv_select import key_inv_select
 from type_select import type_select
+from acc_eval import acc_eval
+from acc_write import acc_write
 
 class Chord_ID:
     
@@ -107,10 +109,6 @@ class Chord_ID:
             self.w2 = self.w2-adj
         table_update(self.w2,"type_weight") # writes adjusted weights to SQL table
 
-    
-    def train(self): # used continual training
-        for i in range(0,25):
-            self.learn()    
 
     def think(self): # uses calculated weights to determine chords
 
@@ -132,17 +130,51 @@ class Chord_ID:
         inv = key_inv_select(inv_a)
         type_ = type_select(type_a)
 
-        out1 = ["key",
-                "type",
-                "inv"]
+        out1 = ["key:",
+                "type:",
+                "inv:"]
         out2 = [key,
                 type_,
                 inv]
         
-        return np.append(out1,out2,1)
+        return [out1,out2]
         
 
-        
+    def train(self): # used continual training
+        for i in range(0,27):
+            
+            tests = self.think()  # computes the adjusted weights
+
+            key_o = tests[1][0] # observed key 
+            type_o = tests[1][1] # observed type 
+            inv_o = tests[1][2] # observed inversion
+            tot_o = [key_o,type_o,inv_o] # observed actual chord
+
+            key_e = key_inv_select(self.a1) # actual or "expected" key
+            type_e = type_select(self.a2) # expected type
+            inv_e = key_inv_select(self.a3) # expected inversion
+            tot_e = [key_e,type_e,inv_e] # expected chord
+
+            # determines if expected matches observed
+            key_acc = acc_eval(key_o,key_e)
+            type_acc = acc_eval(type_o,type_e)
+            inv_acc = acc_eval(inv_o,inv_e)
+            tot_acc = acc_eval(tot_o,tot_e)
+            
+            # writes the accuracy measurement to table
+            acc_write(key_acc,"key_acc")
+            acc_write(type_acc,"type_acc")
+            acc_write(inv_acc,"inv_acc")
+            acc_write(tot_acc,"total_acc")
+
+            self.learn()    # runs the weight adjustment process
+
+c = Chord_ID()
+c.train()
+c.train()
+c.train()
+
+
 
 
 
