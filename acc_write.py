@@ -12,4 +12,5 @@ def acc_write(data,col_n):
 
     cur = chord_db.cursor() # establishes cursor
 
-    cur.execute("INSERT INTO accuracy( " + col_n + ") VALUES( " + data + ")" ) # inserts data
+    cur.execute("INSERT INTO accuracy( " + col_n + ") VALUES( " + str(data) + ")" ) # inserts data
+    chord_db.commit()
