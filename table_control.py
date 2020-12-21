@@ -6,6 +6,7 @@ from inv_act_setup import inv_act_setup
 from inv_weight_setup import inv_weight_setup
 from type_setup import type_setup
 from chord_db_drop import tab_drop
+from acc_table_setup import acc_table_setup
 
 def table_control(on_or_off):
 
@@ -16,6 +17,8 @@ def table_control(on_or_off):
         type_weight_setup()
         inv_weight_setup()
         inv_act_setup()
+        acc_table_setup()
+
     def drop(): # establishes drop portion of function
         tab_drop("key_act")
         tab_drop("key_weight")
@@ -23,7 +26,8 @@ def table_control(on_or_off):
         tab_drop("k_act")
         tab_drop("inv_act")
         tab_drop("inv_weight")
-    
+        tab_drop("accuracy")
+
     # controls if function writes or drops
     if on_or_off == "on":
         tab_setup()
