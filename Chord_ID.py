@@ -51,17 +51,22 @@ class Chord_ID:
         # key and inversion layer
         for k in range(0,2000):    
             x1 = np.dot((self.w1),self.input) # key activation input
+            x2 = np.dot((self.w2),self.input) # input for type activation
             x3 = np.dot(self.w3,self.input) # inversion activation input
             y1 = self.sig(x1) # key activation
+            y2 = self.sig(x2) # activation function for type 
             y3 = self.sig(x3) # inversion activation
             dy1 = self.sigd(x1) # derivative of key activation 
+            dy2 = self.sigd(x2) # derivative of type activation function
             dy3 = self.sigd(x3) # derivative of inversion activation
             dc1 = 2*(self.a1-y1) # derivatives of cost functions
+            dc2 = 2*(self.a2-y2) 
             dc3 = 2*(self.a3-y3)
             adj01 = dc1*dy1 # continuation of product rule
+            adj02 = dc2*dy2 
             adj03 = dc3*dy3
             
-            
+            # loop handles key and inversion
             for i in range(0,11):
                 adji1 = []
                 adji3 = []
@@ -78,36 +83,29 @@ class Chord_ID:
                 else: 
                     adj1 = np.vstack((adj1,adji1))
                     adj3 = np.vstack((adj3,adji3))
-            
-            self.w1 = self.w1-adj1
-            self.w3 = self.w3-adj3
-        y13 = np.append(y1,y3,0) # used as "detection" the type layer
-        table_update(self.w1,"key_weight") # writes adjusted weights to SQL table
-        table_update(self.w3,"inv_weight")
 
-
-        # type layer
-        for k in range(0,2000): 
-            
-            x2 = np.dot((self.w2),y13) # input for type activation
-            y2 = self.sig(x2) # activation function for type 
-            dy2 = self.sigd(x2) # derivative of type activation function
-            dc2 = 2*(self.a2-y2) # derivative of type cost function
-            adj0 = dc2*dy2 # continuation of product rule
-        
+            # loop handles type
             for i in range(0,27):
                 adji = []
-                for j in range(0,22):
-                    v = adj0[i]*self.w2[i][j]*0.001
+                for j in range(0,882):
+                    v = adj02[i]*self.w2[i][j]*0.001
                     v2 = np.round(v,2)
-                    adji = np.append(adji,v2)
+                    adji2 = np.append(adji,v2)
                 if i == 0:
-                    adj = adji
+                    adj2 = adji2
                 else: 
-                    adj = np.vstack((adj,adji))
+                    adj2 = np.vstack((adj2,adji2))
             
-            self.w2 = self.w2-adj
-        table_update(self.w2,"type_weight") # writes adjusted weights to SQL table
+            self.w1 = self.w1-adj1
+            self.w2 = self.w2-adj2
+            self.w3 = self.w3-adj3
+        
+        table_update(self.w1,"key_weight") # writes adjusted weights to SQL table
+        table_update(self.w2,"type_weight")
+        table_update(self.w3,"inv_weight")
+        
+
+        
 
 
     def think(self): # uses calculated weights to determine chords
@@ -121,8 +119,8 @@ class Chord_ID:
         inv_a = self.sig(inv_x) # activation for inversion
 
         # type evaluation 
-        type_inp = np.append(key_a,inv_a,0) # forms input for 2nd layer
-        type_x = np.dot(type_weight(),type_inp) # uses weights & input layer to make input to sigmoid function
+        # type_inp = np.append(key_a,inv_a,0) # forms input for 2nd layer
+        type_x = np.dot(type_weight(),self.input) # uses weights & input layer to make input to sigmoid function
         type_a = self.sig(type_x) # activation for type
         
         # naming portion 
@@ -141,7 +139,7 @@ class Chord_ID:
         
 
     def train(self): # used continual training
-        for i in range(0,27):
+        for i in range(0,1):
             
             tests = self.think()  # computes the adjusted weights
 
@@ -171,9 +169,6 @@ class Chord_ID:
 
 c = Chord_ID()
 c.train()
-c.train()
-c.train()
-
 
 
 
