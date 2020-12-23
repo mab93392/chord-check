@@ -88,7 +88,7 @@ class Chord_ID:
             for i in range(0,27):
                 adji = []
                 for j in range(0,882):
-                    v = adj02[i]*self.w2[i][j]*0.001
+                    v = adj02[i]*self.w2[i][j]*0.0005
                     v2 = np.round(v,2)
                     adji2 = np.append(adji,v2)
                 if i == 0:
@@ -139,15 +139,13 @@ class Chord_ID:
         
 
     def train(self): # used continual training
-        for i in range(0,1):
-            
+        for i in range(0,10):
+       
             tests = self.think()  # computes the adjusted weights
-
             key_o = tests[1][0] # observed key 
             type_o = tests[1][1] # observed type 
             inv_o = tests[1][2] # observed inversion
             tot_o = [key_o,type_o,inv_o] # observed actual chord
-
             key_e = key_inv_select(self.a1) # actual or "expected" key
             type_e = type_select(self.a2) # expected type
             inv_e = key_inv_select(self.a3) # expected inversion
@@ -158,17 +156,13 @@ class Chord_ID:
             type_acc = acc_eval(type_o,type_e)
             inv_acc = acc_eval(inv_o,inv_e)
             tot_acc = acc_eval(tot_o,tot_e)
-            
-            # writes the accuracy measurement to table
-            acc_write(key_acc,"key_acc")
-            acc_write(type_acc,"type_acc")
-            acc_write(inv_acc,"inv_acc")
-            acc_write(tot_acc,"total_acc")
+
+            # writes to accuracy table
+            ac_vals =("%s,%s,%s,%s" % (key_acc,type_acc,inv_acc,tot_acc) )
+            acc_write(ac_vals,"key_acc,type_acc,inv_acc,tot_acc")
 
             self.learn()    # runs the weight adjustment process
 
-c = Chord_ID()
-c.train()
 
 
 
