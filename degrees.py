@@ -16,7 +16,7 @@ def degrees(key,deg):
                 freqs = np.append(freqs,deg[i]*c_key*2/12) # adds subsequent notes of chord
             
             
-            for j in range(0,(deg_num-1)):
+            for j in range(0,1):
                 xx = np.random.rand() 
                 t1 = abs(1 / (n-5.5)) # adds decay-from-middle-range term
                 t2 = (1 / (1+np.exp(-xx))) / 3 # adds noise term
@@ -29,3 +29,4 @@ def degrees(key,deg):
     return tone_data
 
 
+print(degrees(0,[2,4,6,10,11]))
