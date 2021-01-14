@@ -23,8 +23,8 @@ def degrees(key,deg):
                 I = np.append(I,(t1+t2) / 2 ) # combines terms and adds them to intensity list
 
     freqs = np.reshape(freqs,(len(freqs),1))
-    I = np.reshape(freqs,(len(I),1))
-    tone_data = np.append(freqs,I,1)
+    I = np.reshape(I,(len(I),1))
+    tone_data = [freqs,I]
 
     return tone_data
 
