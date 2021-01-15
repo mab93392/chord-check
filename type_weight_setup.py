@@ -16,7 +16,7 @@ def type_weight_setup():
     # creates table and first column
     cur.execute("CREATE TABLE type_weight (weight_num INT AUTO_INCREMENT PRIMARY KEY, C1 FLOAT NOT NULL DEFAULT 0)")
     c_name = "C1" # begins making name statment
-    for j in range(0,27):
+    for j in range(0,34):
         k = np.random.random(882)
         vs = "%s" % round(k[0],5) # begins making value statement
         if j == 0:
@@ -28,7 +28,7 @@ def type_weight_setup():
                 chord_db.commit() 
         
         
-        else: # makes other 21 rows of table
+        else: # makes other 33 rows of table
             for i in range(1,882): 
                 vs += ",%s" % round(k[i],5)
     
