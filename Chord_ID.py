@@ -26,7 +26,7 @@ class Chord_ID:
 
 # intializes the comparison values for the cost function
         self.a1 = np.reshape(key_act(self.key + 1)[0][1:],(11,1))
-        self.a2 = np.reshape(type_act(self.type + 1)[0][1:],(27,1))
+        self.a2 = np.reshape(type_act(self.type + 1)[0][1:],(34,1))
         self.a3 = np.reshape(inv_act(self.inv + 1)[0][1:],(11,1))
 
 # initializes the wieghts for the network
@@ -85,10 +85,10 @@ class Chord_ID:
                     adj3 = np.vstack((adj3,adji3))
 
             # loop handles type
-            for i in range(0,27):
+            for i in range(0,34):
                 adji = []
                 for j in range(0,882):
-                    v = adj02[i]*self.w2[i][j]*0.0005
+                    v = adj02[i]*self.w2[i][j]*0.0001
                     v2 = np.round(v,2)
                     adji2 = np.append(adji,v2)
                 if i == 0:
@@ -139,7 +139,7 @@ class Chord_ID:
         
 
     def train(self): # used continual training
-        for i in range(0,10):
+        for i in range(0,3):
        
             tests = self.think()  # computes the adjusted weights
             key_o = tests[1][0] # observed key 
@@ -158,16 +158,15 @@ class Chord_ID:
             tot_acc = acc_eval(tot_o,tot_e)
 
             # writes to accuracy table
-            ac_vals =("%s,%s,%s,%s" % (key_acc,type_acc,inv_acc,tot_acc) )
-            acc_write(ac_vals,"key_acc,type_acc,inv_acc,tot_acc")
+            # ac_vals =("%s,%s,%s,%s" % (key_acc,type_acc,inv_acc,tot_acc) )
+            # acc_write(ac_vals,"key_acc,type_acc,inv_acc,total_acc")
 
             self.learn()    # runs the weight adjustment process
 
 
 
-
-
-
+c = Chord_ID()
+c.train()
 
 
 
