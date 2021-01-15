@@ -15,7 +15,7 @@ def inversions(key):
     for n in range(0,4):
         c_base = np.power(2,n)*A_base
         if base_opt == 0:
-            base_pitch = np.append(base+pitch,c_base)
+            base_pitch = np.append(base_pitch,c_base)
         else:
             base_pitch = np.append(base_pitch,(base_opt*2*c_base/12)) # adds base pitch
 
