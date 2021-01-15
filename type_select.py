@@ -59,5 +59,20 @@ def type_select(acts):
         out = "7 #13"
     elif apx == acts[27]:
         out = "sus4 m7"
+    elif apx == acts[28]:
+        out = "major 7th"
+    elif apx == acts[29]:
+        out = "Silence"
+    elif apx == acts[30]:
+        out = "single note w/base"
+    elif apx == acts[31]:
+        out = "single note"
+    elif apx == acts[32]:
+        out = "minor 7th"
+    elif apx == acts[33]:
+        out = "major 6th"
+    elif apx == acts[34]:
+        out = "dim 6th"
+    
     
     return out
