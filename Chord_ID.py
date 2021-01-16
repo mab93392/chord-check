@@ -158,8 +158,8 @@ class Chord_ID:
             tot_acc = acc_eval(tot_o,tot_e)
 
             # writes to accuracy table
-            # ac_vals =("%s,%s,%s,%s" % (key_acc,type_acc,inv_acc,tot_acc) )
-            # acc_write(ac_vals,"key_acc,type_acc,inv_acc,total_acc")
+            ac_vals =("%s,%s,%s,%s" % (key_acc,type_acc,inv_acc,tot_acc) )
+            acc_write(ac_vals,"key_acc,type_acc,inv_acc,total_acc")
 
             self.learn()    # runs the weight adjustment process
 
