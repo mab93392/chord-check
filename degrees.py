@@ -36,4 +36,3 @@ def degrees(key,deg):
     return tone_data
 
 
-print(degrees(440,[0,1,4,6]))
