@@ -13,7 +13,7 @@ def type_setup():
 
     cur = chord_db.cursor() # establishes cursor
 
-    for i in range(0,27):
+    for i in range(0,34):
         if i == 0:
             # creates table and first column
             cur.execute("CREATE TABLE k_act (act_num INT AUTO_INCREMENT PRIMARY KEY, C1 FLOAT NOT NULL DEFAULT 0)")
@@ -27,7 +27,7 @@ def type_setup():
         chord_db.commit()
         
         # populates table with 1's in apropiate locations
-    for i in range(0,27):
+    for i in range(0,34):
         s = "UPDATE k_act SET C%s = 1     WHERE act_num = %s"
         cur.execute(s,(i+1,i+1))
         chord_db.commit()
